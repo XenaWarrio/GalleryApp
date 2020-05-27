@@ -1,17 +1,17 @@
 import 'package:FlutterGalleryApp/res/res.dart';
 import 'package:FlutterGalleryApp/widgets/widgets.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class FullScreenImage extends StatefulWidget {
 
-   static const  String link =
+  final Animation<double> transitionAnimation;
+
+  static const String link =
       'https://flutter-examples.com/wp-content/uploads/2019/09/blossom.jpg';
   static const String description =
       ' so it is a very big tree , without heart. So take my hand. '
       'and many many many textso it is a very big tree , without heart. So take my hand. and many many'
       ' many textso it is a very big tree , without heart. So take my hand. and many many many text ';
-
 
   final String name;
   final String userName;
@@ -25,7 +25,7 @@ class FullScreenImage extends StatefulWidget {
       this.altDescription = "",
       this.photo = link,
       this.userPhoto = link,
-      Key key})
+      Key key, this.transitionAnimation})
       : super(key: key);
 
   @override
@@ -34,7 +34,29 @@ class FullScreenImage extends StatefulWidget {
   }
 }
 
-class _FullScreenImage extends State<FullScreenImage> {
+class _FullScreenImage extends State<FullScreenImage>  with TickerProviderStateMixin {
+
+AnimationController controller;
+Animation<double> animation;
+
+initState() {
+  super.initState();
+  controller = AnimationController(
+      duration: const Duration(milliseconds: 1000), vsync: this);
+  animation = CurvedAnimation(parent: controller, curve: Curves.easeIn);
+
+  animation.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        controller.reverse();
+      } else if (status == AnimationStatus.dismissed) {
+        controller.forward();
+      }
+    });
+
+  controller.forward();
+}
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,7 +73,13 @@ class _FullScreenImage extends State<FullScreenImage> {
               style: AppStyles.h3,
             ),
           ),
-          _photo(),
+            Container(
+              child: FadeTransition(
+                opacity: animation,
+                child: _photo(),
+              ),
+            ),
+
           _buttons(),
         ],
       ),
@@ -68,16 +96,16 @@ class _FullScreenImage extends State<FullScreenImage> {
       ),
       backgroundColor: AppColors.white,
       leading: IconButton(
-        icon: Icon( CupertinoIcons.back),
+        icon: Icon(CupertinoIcons.back),
         onPressed: () {},
       ),
     );
   }
 
   Widget _photo() {
-    return Row(
+    return  Row(
       children: <Widget>[
-         UserAvatar(imageLink: widget.userPhoto),
+        UserAvatar(widget.userPhoto),
         Column(
           children: <Widget>[
             Text(
@@ -87,7 +115,7 @@ class _FullScreenImage extends State<FullScreenImage> {
             Text(
               '@${widget.userName}',
               style: AppStyles.h5Black,
-            )
+            ),
           ],
         ),
       ],
