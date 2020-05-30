@@ -37,7 +37,7 @@ class _FeedState extends State<Feed> {
                   MaterialPageRoute(builder: (context) => FullScreenImage()));
             },
             child: Hero(
-              tag: "$index hero",
+              tag: "$index item",
               child: Photo(photoLink: kFlutterDash),
             )),
         _buildPhotoMeta(index),
