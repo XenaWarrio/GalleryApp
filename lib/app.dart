@@ -1,7 +1,4 @@
-import 'package:FlutterGalleryApp/res/colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'res/res.dart';
 import 'screens/feed_screen.dart';
 
