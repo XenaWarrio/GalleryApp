@@ -1,5 +1,6 @@
 import 'package:FlutterGalleryApp/res/res.dart';
 import 'package:FlutterGalleryApp/widgets/widgets.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class FullScreenImage extends StatefulWidget {
@@ -46,9 +47,7 @@ initState() {
   animation = CurvedAnimation(parent: controller, curve: Curves.easeIn);
 
   animation.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        controller.reverse();
-      } else if (status == AnimationStatus.dismissed) {
+    if (status == AnimationStatus.dismissed) {
         controller.forward();
       }
     });
