@@ -3,6 +3,8 @@ import 'package:FlutterGalleryApp/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'feed_screen.dart';
+
 class FullScreenImage extends StatefulWidget {
 
   final Animation<double> transitionAnimation;
@@ -15,6 +17,7 @@ class FullScreenImage extends StatefulWidget {
       ' many textso it is a very big tree , without heart. So take my hand. and many many many text ';
 
   final String name;
+  final int index;
   final String userName;
   final String altDescription;
   final String photo;
@@ -22,6 +25,7 @@ class FullScreenImage extends StatefulWidget {
 
   FullScreenImage(
       {this.name = "",
+        this.index,
       this.userName = "",
       this.altDescription = "",
       this.photo = link,
@@ -37,7 +41,7 @@ class FullScreenImage extends StatefulWidget {
 
 class _FullScreenImage extends State<FullScreenImage>  with TickerProviderStateMixin {
 
-AnimationController controller;
+  AnimationController controller;
 Animation<double> animation;
 
 initState() {
@@ -62,7 +66,10 @@ initState() {
       appBar: _appBar(),
       body: Column(
         children: <Widget>[
-          Photo(photoLink: widget.photo, key: Key('Photo')),
+          Hero(
+            tag: "heroTag ${widget.index}",
+          child : Photo(photoLink: kFlutterDash, key: Key('Photo')),
+          ),
           Padding(
             padding: EdgeInsets.only(left: 10, bottom: 10, right: 10),
             child: Text(
@@ -108,11 +115,12 @@ initState() {
         Column(
           children: <Widget>[
             Text(
-              widget.name,
+              //widget.name
+              "Ksenia",
               style: AppStyles.h1Black,
             ),
             Text(
-              '@${widget.userName}',
+              '@BLa bla',
               style: AppStyles.h5Black,
             ),
           ],
@@ -171,4 +179,5 @@ initState() {
   }
 
   void someMethod() {}
+
 }
